@@ -22,7 +22,7 @@ YMDelegateChainRemove(self.dataSource, section1, self);
 * **YMDelegateChainReplace:** 从替换已存在的delegate
 //将section1从链表中删除
 ```OBJC
-//将section1替换section1
+//将section1替换section2
 YMDelegateChainReplace(self.dataSource, section1, section2, self);
 ```
 * **YMDelegateChainContinue:** 设置continue标志，指定当前delegate方法返回后，当前调用结束后，继续调用下一个Delegate，可以实现广播
