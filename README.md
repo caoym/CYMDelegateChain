@@ -106,7 +106,6 @@ YMDelegateChainContinue();
     }
     sectionId = data.sections.count;
     
-    
     section.sectionId = sectionId;
     //在链中插入新section,每个section只处理自己的事件
     YMDelegateChainInsert(self.dataSource, section, self);
@@ -115,6 +114,18 @@ YMDelegateChainContinue();
     return sectionId;
 }
 @end
-@end
+```
+4. 操作UITableView,插入多个section
+```OBJC
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //测试section
+    TestTableViewSectionData* sec0 = [[TestTableViewSectionData alloc]init];
+    TestTableViewSectionData* sec1 = [[TestTableViewSectionData alloc]init];
+    TestTableViewSectionData* sec2 = [[TestTableViewSectionData alloc]init];
+    [_tabView addTestSection:sec0];
+    [_tabView addTestSection:sec1];
+    [_tabView addTestSection:sec2];
+}
 ```
 
