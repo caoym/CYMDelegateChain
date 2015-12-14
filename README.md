@@ -42,7 +42,8 @@ YMDelegateChainContinue();
     @end
     
     @implementation TestTableViewSectionData
-    - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    - (UITableViewCell *)tableView:(UITableView *)tableView 
+             cellForRowAtIndexPath:(NSIndexPath *)indexPath{
         if (_sectionId == indexPath.section) { //只处理本section的消息
             //作一些与本section相关的事情
             ...
