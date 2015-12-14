@@ -36,96 +36,100 @@ YMDelegateChainContinue();
 下面是关键部分的代码，完整代码请下载源码查看。
 
 1. 封装类，处理section数据
-```OBJC
-@interface TestTableViewSectionData : NSObject<UITableViewDataSource>
-@property NSInteger sectionId;
-@end
-
-@implementation TestTableViewSectionData
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_sectionId == indexPath.section) { //只处理本section的消息
-        //作一些与本section相关的事情
-        ...
-        return cell;
-    }else{
-        //非本section的消息，交给其他delegate处理
-        YMDelegateChainContinue();
-        return nil;
+    ```OBJC
+    @interface TestTableViewSectionData : NSObject<UITableViewDataSource>
+    @property NSInteger sectionId;
+    @end
+    
+    @implementation TestTableViewSectionData
+    - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+        if (_sectionId == indexPath.section) { //只处理本section的消息
+            //作一些与本section相关的事情
+            ...
+            return cell;
+        }else{
+            //非本section的消息，交给其他delegate处理
+            YMDelegateChainContinue();
+            return nil;
+        }
+    
     }
-
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_sectionId == section) { //只处理本section的消息
-        //作一些与本section相关的事情
-        ...
-    }else{
-        //非本section的消息，交给其他delegate处理
-        YMDelegateChainContinue();
-        return 0;
+    - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+        if (_sectionId == section) { //只处理本section的消息
+            //作一些与本section相关的事情
+            ...
+        }else{
+            //非本section的消息，交给其他delegate处理
+            YMDelegateChainContinue();
+            return 0;
+        }
     }
-}
-@end
-```
+    @end
+    ```
+
 2. 封装类，处理TableView数据，如section数量
-```OBJC
-@interface TestTableViewData : NSObject<UITableViewDataSource>
-@property NSMutableArray* sections;
-@end
-
-@implementation TestTableViewData
-
--(instancetype) init
-{
-    self = [super init];
-    if(self){
-        _sections = [[NSMutableArray alloc]init];
+    ```OBJC
+    @interface TestTableViewData : NSObject<UITableViewDataSource>
+    @property NSMutableArray* sections;
+    @end
+    
+    @implementation TestTableViewData
+    
+    -(instancetype) init
+    {
+        self = [super init];
+        if(self){
+            _sections = [[NSMutableArray alloc]init];
+        }
+        return self;
     }
-    return self;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return _sections.count;
-}
-@end
-
-```
+    
+    - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+        return _sections.count;
+    }
+    @end
+    
+    ```
+    
 3. 扩展UITableView,方便对section的管理
-```OBJC
-@implementation UITableView(TestSection)
-
-/** 添加section，返回sectionid */
--(NSInteger) addTestSection:(TestTableViewSectionData*) section{
+    ```OBJC
+    @implementation UITableView(TestSection)
     
-    TestTableViewData*data = objc_getAssociatedObject(self, @"__testdata");
-    NSInteger sectionId = 0;
-    if(!data){
-        data = [[TestTableViewData alloc]init];
-        objc_setAssociatedObject(self, @"__testdata", data, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        //在链中插入新section,只处理numberOfSectionsInTableView
-        YMDelegateChainInsert(self.dataSource, data, self);
+    /** 添加section，返回sectionid */
+    -(NSInteger) addTestSection:(TestTableViewSectionData*) section{
+        
+        TestTableViewData*data = objc_getAssociatedObject(self, @"__testdata");
+        NSInteger sectionId = 0;
+        if(!data){
+            data = [[TestTableViewData alloc]init];
+            objc_setAssociatedObject(self, @"__testdata", data, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            //在链中插入新section,只处理numberOfSectionsInTableView
+            YMDelegateChainInsert(self.dataSource, data, self);
+        }
+        sectionId = data.sections.count;
+        
+        section.sectionId = sectionId;
+        //在链中插入新section,每个section只处理自己的事件
+        YMDelegateChainInsert(self.dataSource, section, self);
+        
+        [data.sections addObject:section];
+        return sectionId;
     }
-    sectionId = data.sections.count;
-    
-    section.sectionId = sectionId;
-    //在链中插入新section,每个section只处理自己的事件
-    YMDelegateChainInsert(self.dataSource, section, self);
-    
-    [data.sections addObject:section];
-    return sectionId;
-}
-@end
-```
+    @end
+    ```
+
 4. 操作UITableView,插入多个section
-```OBJC
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    //测试section
-    TestTableViewSectionData* sec0 = [[TestTableViewSectionData alloc]init];
-    TestTableViewSectionData* sec1 = [[TestTableViewSectionData alloc]init];
-    TestTableViewSectionData* sec2 = [[TestTableViewSectionData alloc]init];
-    [_tabView addTestSection:sec0];
-    [_tabView addTestSection:sec1];
-    [_tabView addTestSection:sec2];
-}
-```
+    ```OBJC
+    - (void)viewDidLoad {
+        [super viewDidLoad];
+        //测试section
+        TestTableViewSectionData* sec0 = [[TestTableViewSectionData alloc]init];
+        TestTableViewSectionData* sec1 = [[TestTableViewSectionData alloc]init];
+        TestTableViewSectionData* sec2 = [[TestTableViewSectionData alloc]init];
+        [_tabView addTestSection:sec0];
+        [_tabView addTestSection:sec1];
+        [_tabView addTestSection:sec2];
+    }
+    ```
+
 
