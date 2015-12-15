@@ -1,5 +1,7 @@
 # CYMDelegateChain
-An implement of delegate chain and broadcast. 实现delegate链/广播
+An implement of delegate chain and broadcast. 
+
+实现delegate链/广播
 
 ## WHY
 
@@ -132,5 +134,7 @@ CYMDelegateChainContinue();
         [_tabView addTestSection:sec2];
     }
     ```
+5. 查看运行结果
 
+    ![](https://github.com/caoym/CYMDelegateChain/blob/master/doc/demo.png)
 
