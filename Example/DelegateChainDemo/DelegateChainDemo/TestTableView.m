@@ -6,7 +6,7 @@
 
 #import <objc/runtime.h>
 #import "TestTableView.h"
-#import "YMDelegateChain.h"
+#import "CYMDelegateChain.h"
 
 
 /** 
@@ -49,7 +49,7 @@
         return cell;
     }else{
         //非本section的消息，交给其他delegate处理
-        YMDelegateChainContinue();
+        CYMDelegateChainContinue();
         return nil;
     }
 
@@ -59,7 +59,7 @@
         return 3;
     }else{
         //非本section的消息，交给其他delegate处理
-        YMDelegateChainContinue();
+        CYMDelegateChainContinue();
         return 0;
     }
 }
@@ -80,14 +80,14 @@
         data = [[TestTableViewData alloc]init];
         objc_setAssociatedObject(self, @"__testdata", data, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         //在链中插入新section,只处理numberOfSectionsInTableView
-        YMDelegateChainInsert(self.dataSource, data, self);
+        CYMDelegateChainInsert(self.dataSource, data, self);
     }
     sectionId = data.sections.count;
     
     
     section.sectionId = sectionId;
     //在链中插入新section,每个section只处理自己的事件
-    YMDelegateChainInsert(self.dataSource, section, self);
+    CYMDelegateChainInsert(self.dataSource, section, self);
     
     [data.sections addObject:section];
     return sectionId;

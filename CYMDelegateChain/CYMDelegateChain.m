@@ -1,45 +1,45 @@
 //
-//  YMDelegateChain.m
+//  CYMDelegateChain.m
 //  Created by caoyangmin on 15/12/3.
 
 
-#import "YMDelegateChain.h"
+#import "CYMDelegateChain.h"
 #import "objc/runtime.h"
 
 
-@implementation YMDelegateChain
+@implementation CYMDelegateChain
 {
     __weak id _first;
     __weak id _second;
 }
 
-+(nonnull YMDelegateChain*)insert:(nonnull id)newDelegate before:(nullable id)oriDelegate owner:(nullable id)owner
++(nonnull CYMDelegateChain*)insert:(nonnull id)newDelegate before:(nullable id)oriDelegate owner:(nullable id)owner
 {
 
-    YMDelegateChain* chain = [[YMDelegateChain alloc]initWithInsert:newDelegate before:oriDelegate];
+    CYMDelegateChain* chain = [[CYMDelegateChain alloc]initWithInsert:newDelegate before:oriDelegate];
 
     //通常delegate都是weak熟悉，下面方法是为了持有delegate，避免使用时再去定义一个类变量
     if(owner){
-        [YMDelegateChain add:chain toOwner:owner];
+        [CYMDelegateChain add:chain toOwner:owner];
     }
     return chain;
 }
 +(nullable id)remove:(nonnull id)delegate from:(nullable id)root owner:(nullable id)owner
 {
-    if ([root isKindOfClass:[YMDelegateChain class]]) {
+    if ([root isKindOfClass:[CYMDelegateChain class]]) {
         //Delegate,需要逐个遍历删除
-        YMDelegateChain*pos = root;
+        CYMDelegateChain*pos = root;
         
         if (pos->_first == delegate) { //找到
-            [YMDelegateChain remove:delegate fromOwner:owner];
+            [CYMDelegateChain remove:delegate fromOwner:owner];
             return pos->_second;
         }else{
-            pos->_second = [YMDelegateChain remove:delegate from:pos->_second owner:owner];
+            pos->_second = [CYMDelegateChain remove:delegate from:pos->_second owner:owner];
             return pos;
         }
         
     }else if(root == delegate){
-        [YMDelegateChain remove:delegate fromOwner:owner];
+        [CYMDelegateChain remove:delegate fromOwner:owner];
         return nil;
     }
     return root;
@@ -47,16 +47,16 @@
 
 +(id)replace:(id)delegate with:(id)newDelegate from:(id)root owner:(id)owner
 {
-    if ([root isKindOfClass:[YMDelegateChain class]]) {
+    if ([root isKindOfClass:[CYMDelegateChain class]]) {
         //需要逐个遍历查找
-        YMDelegateChain*pos = root;
+        CYMDelegateChain*pos = root;
         
         if (pos->_first == delegate) { //找到
-            [YMDelegateChain remove:delegate fromOwner:owner];
-            return [YMDelegateChain insert:newDelegate before:pos owner:owner];
+            [CYMDelegateChain remove:delegate fromOwner:owner];
+            return [CYMDelegateChain insert:newDelegate before:pos owner:owner];
             
         }else{
-            return [YMDelegateChain replace:delegate with:newDelegate from:pos->_second owner:owner];
+            return [CYMDelegateChain replace:delegate with:newDelegate from:pos->_second owner:owner];
         }
         
     }else if(root == delegate){
@@ -68,7 +68,7 @@
 {
     if (owner) {
         NSMutableArray*chains = objc_getAssociatedObject(owner, @"__delegate_chains");
-        for(YMDelegateChain* chain in chains) {
+        for(CYMDelegateChain* chain in chains) {
             if (chain->_first == delegate) {
                 [chains removeObject:chain];
                 break;
@@ -76,7 +76,7 @@
         }
     }
 }
-+(void)add:(YMDelegateChain*)chain toOwner:(id)owner
++(void)add:(CYMDelegateChain*)chain toOwner:(id)owner
 {
     NSMutableArray*chains = objc_getAssociatedObject(owner, @"__delegate_chains");
     if (!chains) {
@@ -158,16 +158,16 @@
         return;
     }
     if (_first && [_first respondsToSelector:[anInvocation selector]]){
-        [YMDelegateChain continueChain:NO];
+        [CYMDelegateChain continueChain:NO];
         [anInvocation invokeWithTarget:_first];
         
-        if (![YMDelegateChain willContinueChain]) { //是否调用下一个可能存在的delegate
+        if (![CYMDelegateChain willContinueChain]) { //是否调用下一个可能存在的delegate
             return;
         }
         
     }
     if (_second && [_second respondsToSelector:[anInvocation selector]]){
-        [YMDelegateChain continueChain:NO];
+        [CYMDelegateChain continueChain:NO];
         [anInvocation invokeWithTarget:_second];
         return;
     }

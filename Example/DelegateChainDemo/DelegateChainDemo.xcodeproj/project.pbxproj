@@ -15,8 +15,8 @@
 		A81180621C1E5E8500A0717F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81180601C1E5E8500A0717F /* LaunchScreen.storyboard */; };
 		A811806D1C1E5E8500A0717F /* DelegateChainDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A811806C1C1E5E8500A0717F /* DelegateChainDemoTests.m */; };
 		A81180781C1E5E8500A0717F /* DelegateChainDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A81180771C1E5E8500A0717F /* DelegateChainDemoUITests.m */; };
-		A81180881C1E60B300A0717F /* YMDelegateChain.m in Sources */ = {isa = PBXBuildFile; fileRef = A81180871C1E60B300A0717F /* YMDelegateChain.m */; };
 		A811808E1C1E664200A0717F /* TestTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A811808D1C1E664200A0717F /* TestTableView.m */; };
+		A8BABB641C1FCC0B00FFF5B1 /* CYMDelegateChain.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BABB631C1FCC0B00FFF5B1 /* CYMDelegateChain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,10 +53,10 @@
 		A81180731C1E5E8500A0717F /* DelegateChainDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DelegateChainDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81180771C1E5E8500A0717F /* DelegateChainDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DelegateChainDemoUITests.m; sourceTree = "<group>"; };
 		A81180791C1E5E8500A0717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A81180861C1E60B300A0717F /* YMDelegateChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMDelegateChain.h; sourceTree = "<group>"; };
-		A81180871C1E60B300A0717F /* YMDelegateChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMDelegateChain.m; sourceTree = "<group>"; };
 		A811808C1C1E664200A0717F /* TestTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTableView.h; sourceTree = "<group>"; };
 		A811808D1C1E664200A0717F /* TestTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTableView.m; sourceTree = "<group>"; };
+		A8BABB621C1FCC0B00FFF5B1 /* CYMDelegateChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYMDelegateChain.h; sourceTree = "<group>"; };
+		A8BABB631C1FCC0B00FFF5B1 /* CYMDelegateChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYMDelegateChain.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +87,6 @@
 		A81180461C1E5E8400A0717F = {
 			isa = PBXGroup;
 			children = (
-				A81180851C1E60B300A0717F /* YMDelegateChain */,
 				A81180511C1E5E8500A0717F /* DelegateChainDemo */,
 				A811806B1C1E5E8500A0717F /* DelegateChainDemoTests */,
 				A81180761C1E5E8500A0717F /* DelegateChainDemoUITests */,
@@ -108,6 +107,7 @@
 		A81180511C1E5E8500A0717F /* DelegateChainDemo */ = {
 			isa = PBXGroup;
 			children = (
+				A8BABB611C1FCC0B00FFF5B1 /* CYMDelegateChain */,
 				A811808C1C1E664200A0717F /* TestTableView.h */,
 				A811808D1C1E664200A0717F /* TestTableView.m */,
 				A81180551C1E5E8500A0717F /* AppDelegate.h */,
@@ -149,14 +149,14 @@
 			path = DelegateChainDemoUITests;
 			sourceTree = "<group>";
 		};
-		A81180851C1E60B300A0717F /* YMDelegateChain */ = {
+		A8BABB611C1FCC0B00FFF5B1 /* CYMDelegateChain */ = {
 			isa = PBXGroup;
 			children = (
-				A81180861C1E60B300A0717F /* YMDelegateChain.h */,
-				A81180871C1E60B300A0717F /* YMDelegateChain.m */,
+				A8BABB621C1FCC0B00FFF5B1 /* CYMDelegateChain.h */,
+				A8BABB631C1FCC0B00FFF5B1 /* CYMDelegateChain.m */,
 			);
-			name = YMDelegateChain;
-			path = ../../YMDelegateChain;
+			name = CYMDelegateChain;
+			path = ../../../CYMDelegateChain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,7 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A81180881C1E60B300A0717F /* YMDelegateChain.m in Sources */,
+				A8BABB641C1FCC0B00FFF5B1 /* CYMDelegateChain.m in Sources */,
 				A811808E1C1E664200A0717F /* TestTableView.m in Sources */,
 				A811805A1C1E5E8500A0717F /* ViewController.m in Sources */,
 				A81180571C1E5E8500A0717F /* AppDelegate.m in Sources */,
