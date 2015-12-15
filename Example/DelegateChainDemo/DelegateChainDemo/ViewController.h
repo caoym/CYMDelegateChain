@@ -9,7 +9,6 @@
 
 @interface ViewController : UIViewController
 
-/** 评论/观点切换 */
 @property(nonatomic,weak)IBOutlet UITableView *tabView;
 
 @end

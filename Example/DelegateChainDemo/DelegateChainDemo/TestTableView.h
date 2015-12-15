@@ -5,7 +5,6 @@
 //  Created by caoyangmin on 15/12/14.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 
